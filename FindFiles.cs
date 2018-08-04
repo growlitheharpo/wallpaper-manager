@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
 namespace WallpaperManager
@@ -35,12 +34,12 @@ namespace WallpaperManager
                 };
 
             var basePath = Path.GetDirectoryName(dbFile) + "\\";
-            var files = query.Where(x => !x.pale 
-				&& !x.dark
-				&& !x.funny 
-				&& !x.edgy 
-				&& x.season != "winter"
-				&& x.season != "fall");
+            var files = query.Where(x => 
+	            !x.funny &&
+				!x.edgy &&
+				!x.gaming &&
+				!x.christmas &&
+	            x.environment.Contains("urban"));
 
             var targetDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\ToolOutput";
             if (Directory.Exists(targetDirectory))
@@ -64,15 +63,7 @@ namespace WallpaperManager
             {
                 CheckFileExists = true,
             })
-            {
-                //return dialog.ShowDialog() == DialogResult.OK ? "" : dialog.FileName;
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    return dialog.FileName;
-                }
-            }
-
-            return "";
+	        return dialog.ShowDialog() == DialogResult.OK ? dialog.FileName : "";
         }
     }
 }
