@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WallpaperData.cs" />
     <Compile Include="CreateDatabase.cs" />
     <Compile Include="FindFiles.cs" />
     <Compile Include="Program.cs" />

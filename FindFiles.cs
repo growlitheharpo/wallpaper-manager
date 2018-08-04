@@ -11,27 +11,9 @@ namespace WallpaperManager
         {
             var dbFile = GetDbFile();
             var allLines = File.ReadAllLines(dbFile);
-
-            var query = from line in allLines.Skip(1)
-                let data = line.Split(',')
-                select new
-                {
-                    fileName = data[0],
-                    pale = bool.Parse(data[1]),
-                    color = new[] {data[2].ToLower(), data[3].ToLower()},
-                    dark = bool.Parse(data[4]),
-                    season = data[5].ToLower(),
-                    environment1 = data[6].ToLower(),
-                    environment2 = data[7].ToLower(),
-                    environment = new[] { data[6].ToLower(), data[7].ToLower() },
-                    funny = bool.Parse(data[8]),
-                    inappropriate = bool.Parse(data[9]),
-                    photograph = bool.Parse(data[10]),
-                    food = bool.Parse(data[11]),
-                    edgy = bool.Parse(data[12]),
-                    gaming = bool.Parse(data[13]),
-                    christmas = bool.Parse(data[14]),
-                };
+	        var query = allLines
+		        .Skip(1)
+		        .Select(WallpaperData.Parse);
 
             var basePath = Path.GetDirectoryName(dbFile) + "\\";
             var files = query.Where(x => 
@@ -40,7 +22,7 @@ namespace WallpaperManager
 				!x.gaming &&
 				!x.christmas &&
 				!x.dark &&
-	            x.environment.Contains("urban"));
+	            x.environment.Contains(WallpaperData.Environment.urban));
 
             var targetDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\ToolOutput";
             if (Directory.Exists(targetDirectory))
@@ -51,7 +33,7 @@ namespace WallpaperManager
             int counter = 1;
             foreach (var f in files)
             {
-                var sourcefile = basePath + f.fileName;
+                var sourcefile = basePath + f.filename;
                 var targetFile = targetDirectory + $"\\{counter}." + Path.GetFileName(sourcefile).Split('.')[1];
                 File.Copy(sourcefile, targetFile);
                 counter++;
