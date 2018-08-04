@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -7,24 +9,6 @@ namespace WallpaperManager
 {
     public static class CreateDatabase
     {
-        private static string[] catgories =
-        {
-            "Pale",             //TRUE, FALSE
-            "Color1",           //RED, BLUE, GREEN, YELLOW, ORANGE, PURPLE, BLACK, WHITE, GREY
-            "Color2",           //RED, BLUE, GREEN, YELLOW, ORANGE, PURPLE, BLACK, WHITE, GREY
-            "Dark",             //TRUE, FALSE
-            "Season",           //WINTER, SPRING, SUMMER, FALL
-            "Environment1",     //URBAN, NATURE, SPACE, RUINS, ABSTRACT, ANCIENT, INDOORS, PORTRAIT
-            "Environment2",     //URBAN, NATURE, SPACE, RUINS, ABSTRACT, ANCIENT, INDOORS, PORTRAIT
-            "Funny",            //TRUE, FALSE
-            "Inappropriate",    //TRUE, FALSE
-            "Photograph",       //TRUE, FALSE
-            "Food",             //TRUE, FALSE
-            "Edgy",             //TRUE, FALSE
-            "Gaming",           //TRUE, FALSE
-            "Christmas",        //TRUE, FALSE
-        };
-
         public static void Create()
         {
             var folder = ChooseFolder();
@@ -37,18 +21,26 @@ namespace WallpaperManager
 
         private static void WriteDatabase(string baseFolder, string[] files)
         {
+	        var categories = typeof(WallpaperData)
+		        .GetFields(BindingFlags.Instance | BindingFlags.Public)
+		        .Select(x => x.Name)
+		        .Select(x => char.ToUpper(x[0]) + x.Substring(1))
+		        .ToArray();
+
             using (var f = File.OpenWrite(baseFolder + "database.csv"))
             {
-                string line = "\"File\"," + string.Join("\",\"", catgories) + "\",\n";
-                byte[] bytes = Encoding.ASCII.GetBytes(line);
+                var line = "\"" + string.Join("\",\"", categories) + "\",\n";
+                var bytes = Encoding.ASCII.GetBytes(line);
                 f.Write(bytes, 0, bytes.Length);
 
                 foreach (var file in files)
                 {
-                    line = file + new string(',', catgories.Length) + "\n";
+                    line = file + new string(',', categories.Length) + "\n";
                     bytes = Encoding.ASCII.GetBytes(line);
                     f.Write(bytes, 0, bytes.Length);
                 }
+
+				f.Flush();
             }
         }
 

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+// ReSharper disable UnusedMember.Global
 
 namespace WallpaperManager
 {
@@ -71,8 +69,15 @@ namespace WallpaperManager
 		public bool gaming;
 		public bool christmas;
 
-		public Color[] color => new[] {color1, color2};
-		public Environment[] environment => new[] {environment1, environment2};
+		public bool HasProperty(Environment e)
+		{
+			return environment1 == e || environment2 == e;
+		}
+
+		public bool HasProperty(Color c)
+		{
+			return color1 == c || color2 == c;
+		}
 
 		public static WallpaperData Parse(string line)
 		{
