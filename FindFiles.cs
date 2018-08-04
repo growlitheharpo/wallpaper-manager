@@ -39,6 +39,7 @@ namespace WallpaperManager
 				!x.edgy &&
 				!x.gaming &&
 				!x.christmas &&
+				!x.dark &&
 	            x.environment.Contains("urban"));
 
             var targetDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\ToolOutput";
