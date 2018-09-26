@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 // ReSharper disable UnusedMember.Global
 
@@ -10,6 +12,19 @@ namespace WallpaperManager
 		{
 			return Enum.TryParse(v, true, out T result) ? result : default(T);
 		}
+
+		public static T? ToEnumNullable<T>(this string v) where T : struct
+		{
+			if (Enum.TryParse(v, true, out T result))
+				return result;
+
+			return null;
+		}
+
+		public static IEnumerable<T> ToEnum<T>(this IEnumerable<string> v) where T : struct
+		{
+			return v.Select(x => x.ToEnum<T>());
+		}
 	}
 
 	public struct WallpaperData
@@ -18,10 +33,10 @@ namespace WallpaperManager
 		{
 			none,
 			red,
-			blue,
-			green,
-			yellow,
 			orange,
+			yellow,
+			green,
+			blue,
 			purple,
 			black,
 			white,

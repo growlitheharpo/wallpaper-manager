@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="WallpaperManager.WallpaperQueryForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WallpaperManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="500">
+    <Grid Margin="20">
+	    <Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" MinWidth="40"/>
+			<ColumnDefinition Width="1*" MinWidth="40"/>
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Margin="5" VerticalAlignment="Center" Grid.Column="0" >
+			<!-- COLOR LIST !-->
+			<DataGrid ItemsSource="{Binding ColorList.Entries}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+						<DataGridTemplateColumn.HeaderTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:WallpaperQueryForm}, Path=DataContext.ColorList.AllSelected}">Select All</CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.HeaderTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="1*" Binding="{Binding Label}" CanUserResize="False" CanUserSort="False" IsReadOnly="True">
+						<DataGridTextColumn.HeaderTemplate>
+							<DataTemplate>
+								<Label>Colors</Label>
+							</DataTemplate>
+						</DataGridTextColumn.HeaderTemplate>
+					</DataGridTextColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+			
+			<Border Margin="25"/>
+
+			<!-- ENVIRONMENT LIST !-->
+			<DataGrid ItemsSource="{Binding EnvironmentList.Entries}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+						<DataGridTemplateColumn.HeaderTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:WallpaperQueryForm}, Path=DataContext.EnvironmentList.AllSelected}">Select All</CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.HeaderTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="1*" Binding="{Binding Label}" CanUserResize="False" CanUserSort="False" IsReadOnly="True">
+						<DataGridTextColumn.HeaderTemplate>
+							<DataTemplate>
+								<Label>Environments</Label>
+							</DataTemplate>
+						</DataGridTextColumn.HeaderTemplate>
+					</DataGridTextColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+
+		</StackPanel>
+
+		<StackPanel Margin="5" VerticalAlignment="Center" Grid.Column="1" >
+			<!-- SEASON LIST !-->
+			<DataGrid ItemsSource="{Binding SeasonList.Entries}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<RadioButton IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"></RadioButton>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="1*" Binding="{Binding Label}" CanUserResize="False" CanUserSort="False" IsReadOnly="True">
+						<DataGridTextColumn.HeaderTemplate>
+							<DataTemplate>
+								<Label>Seasons</Label>
+							</DataTemplate>
+						</DataGridTextColumn.HeaderTemplate>
+					</DataGridTextColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<Border Margin="25"/>
+
+			<!-- GENERIC BOOLS !-->
+			<DataGrid ItemsSource="{Binding AllBools}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True"></CheckBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="1*" Binding="{Binding Label}" CanUserResize="False" CanUserSort="False" IsReadOnly="True">
+						<DataGridTextColumn.HeaderTemplate>
+							<DataTemplate>
+								<Label>Misc.</Label>
+							</DataTemplate>
+						</DataGridTextColumn.HeaderTemplate>
+					</DataGridTextColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+		</StackPanel>
+		<Button Name="CloseButton" Content="Accept" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="75"/>
+	</Grid>
+</UserControl>
