@@ -40,7 +40,7 @@ namespace WallpaperManager
 				try
 				{
 					var sourcefile = basePath + f.filename;
-					var targetFile = targetDirectory + $"\\{++counter}." + Path.GetFileName(sourcefile).Split('.')[1];
+					var targetFile = $"{targetDirectory}\\{++counter}.{Path.GetExtension(sourcefile)}";
 					File.Copy(sourcefile, targetFile);
 				}
 				catch (Exception e)
@@ -56,7 +56,7 @@ namespace WallpaperManager
 			{
 				CheckFileExists = true,
 			})
-				return dialog.ShowDialog() == DialogResult.OK ? dialog.FileName : "";
+			return dialog.ShowDialog() == DialogResult.OK ? dialog.FileName : "";
 		}
 
 	}
@@ -73,35 +73,16 @@ namespace WallpaperManager
 			if (query.environments.Length > 0)
 				targetFiles = query.environments.Aggregate(targetFiles, (current, environment) => current.Where(x => x.HasProperty(environment)));
 			
-			if (query.season != null)
-				targetFiles = targetFiles.Where(x => x.season == query.season);
-
-			if (query.pale != null)
-				targetFiles = targetFiles.Where(x => x.pale == query.pale);
-
-			if (query.dark != null)
-				targetFiles = targetFiles.Where(x => x.dark == query.dark);
-
-			if (query.funny != null)
-				targetFiles = targetFiles.Where(x => x.funny == query.funny);
-
-			if (query.inappropriate != null)
-				targetFiles = targetFiles.Where(x => x.inappropriate == query.inappropriate);
-
-			if (query.photograph != null)
-				targetFiles = targetFiles.Where(x => x.photograph == query.photograph);
-
-			if (query.food != null)
-				targetFiles = targetFiles.Where(x => x.food == query.food);
-
-			if (query.edgy != null)
-				targetFiles = targetFiles.Where(x => x.edgy == query.edgy);
-
-			if (query.gaming != null)
-				targetFiles = targetFiles.Where(x => x.gaming == query.gaming);
-
-			if (query.christmas != null)
-				targetFiles = targetFiles.Where(x => x.christmas == query.christmas);
+			targetFiles = targetFiles.Where(x => query.season == null || x.season == query.season);
+			targetFiles = targetFiles.Where(x => query.pale == null || x.pale == query.pale);
+			targetFiles = targetFiles.Where(x => query.dark == null || x.dark == query.dark);
+			targetFiles = targetFiles.Where(x => query.funny == null || x.funny == query.funny);
+			targetFiles = targetFiles.Where(x => query.inappropriate == null || x.inappropriate == query.inappropriate);
+			targetFiles = targetFiles.Where(x => query.photograph == null || x.photograph == query.photograph);
+			targetFiles = targetFiles.Where(x => query.food == null || x.food == query.food);
+			targetFiles = targetFiles.Where(x => query.edgy == null || x.edgy == query.edgy);
+			targetFiles = targetFiles.Where(x => query.gaming == null || x.gaming == query.gaming);
+			targetFiles = targetFiles.Where(x => query.christmas == null || x.christmas == query.christmas);
 
 			return targetFiles;
 		}

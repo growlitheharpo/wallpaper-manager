@@ -332,7 +332,7 @@ namespace WallpaperManager
 			public WallpaperData.Color[] colors
 			{
 				get {
-					return SharedData.ColorList.AllSelected == true || SharedData.ColorList.Entries.All(x => x.IsChecked != true)?
+					return SharedData.ColorList.AllSelected == true || SharedData.ColorList.Entries.All(x => x.IsChecked != true) ?
 						new WallpaperData.Color[0] :
 						SharedData.ColorList.Entries
 							.Where(x => x.IsChecked == true)
@@ -344,7 +344,7 @@ namespace WallpaperManager
 			public WallpaperData.Environment[] environments
 			{
 				get {
-					return SharedData.EnvironmentList.AllSelected == true || SharedData.EnvironmentList.Entries.All(x => x.IsChecked != true)?
+					return SharedData.EnvironmentList.AllSelected == true || SharedData.EnvironmentList.Entries.All(x => x.IsChecked != true) ?
 					  new WallpaperData.Environment[0] :
 					  SharedData.EnvironmentList.Entries
 							.Where(x => x.IsChecked == true)
@@ -381,7 +381,7 @@ namespace WallpaperManager
 			var form = new WallpaperQueryForm();
 			var qWindow = new Window
 			{
-				Title = "WPF in Console",
+				Title = "Query Provider",
 				Height = 700,
 				Width = 600,
 				Content = form
